@@ -20,7 +20,7 @@ double t_s[D_NUM][D_NUM] = {T_M};
 
 const double dr = (B - A) / D_NUM; // Δrの算出
 
-void init(int n, double a[], double b[], double c[], double d[]){
+void thomas_init(int n, double a[], double b[], double c[], double d[]){
   double r_s = (ALPHA_S * dt[n]) / (dr * dr);
 
   for(int i=0;i<n;i++){
@@ -93,9 +93,8 @@ int main(){
     do {
       old_dt[i] = dt[i];
 
-      init(i, a, b, c, d);
+      thomas_init(i, a, b, c, d);
       thomas(i, a, b, c, d);
-      // printf("t_s[i]: %f\n", t_s[i]);
       dt[i] = ((RHO_S * L) / LAMBDA_S) * ((dr * dr) / (T_M - t_s[i][i+1]));
     } while(is_convergence(old_dt[i], dt[i]));
 
